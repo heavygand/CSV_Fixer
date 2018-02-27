@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="CSV.Fixer.plugin.commands.category"
+            id="CSV.Fixer.plugin.commands.FixTGCounterCommand"
+            name="fix telegramcounter">
+      </command>
+      <command
+            categoryId="CSV.Fixer.plugin.commands.category"
+            id="CSV.Fixer.plugin.commands.showTGNumberCommand"
+            name="show telegram from number">
+      </command>
+      <command
+            categoryId="CSV.Fixer.plugin.commands.category"
+            id="CSV.Fixer.plugin.commands.toggleCommentCommand"
+            name="toggle comment in selected line">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="CSV.Fixer.plugin.commands.FixTGCounterCommand"
+            class="csv.fixer.plugin.handlers.CSVFixerHandler">
+      </handler>
+      <handler
+            class="csv.fixer.plugin.handlers.CSVShowTelegramHandler"
+            commandId="CSV.Fixer.plugin.commands.showTGNumberCommand">
+      </handler>
+      <handler
+            class="csv.fixer.plugin.handlers.CSVToggleCommentHandler"
+            commandId="CSV.Fixer.plugin.commands.toggleCommentCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="CSV.Fixer.plugin.commands.FixTGCounterCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+      <key
+            commandId="CSV.Fixer.plugin.commands.toggleCommentCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+5">
+      </key>
+      <key
+            commandId="CSV.Fixer.plugin.commands.showTGNumberCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+4">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="CSV Fixer Plugin"
+               mnemonic="M"
+               id="CSV.Fixer.plugin.menus.csvFixer">
+            <command
+                  commandId="CSV.Fixer.plugin.commands.FixTGCounterCommand"
+                  mnemonic="S"
+                  id="CSV.Fixer.plugin.menus.FixTGCounterCommand">
+            </command>
+            <command
+                  commandId="CSV.Fixer.plugin.commands.showTGNumberCommand"
+                  id="CSV.Fixer.plugin.menus.showTGNumberCommand"
+                  mnemonic="S">
+            </command>
+            <command
+                  commandId="CSV.Fixer.plugin.commands.toggleCommentCommand"
+                  id="CSV.Fixer.plugin.menus.toggleCommentCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
