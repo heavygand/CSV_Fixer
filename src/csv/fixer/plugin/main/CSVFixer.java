@@ -17,6 +17,9 @@ public class CSVFixer {
 
 	public static void startFixing(IEditorPart part) {
 		
+		ISelectionProvider selectionProvider = ((ITextEditor)part).getSelectionProvider();
+	    ISelection selection = selectionProvider.getSelection();
+		
 		connections.clear();
 
 		try {
@@ -66,7 +69,9 @@ public class CSVFixer {
 			// Changed
 			else {
 				
-				putIntoEditor(doc, allLines);		
+				putIntoEditor(doc, allLines);
+				
+				selectionProvider.setSelection(selection);	
 			}
 
 		} catch (Exception e) {
@@ -125,6 +130,8 @@ public class CSVFixer {
 				
 				lineNumber++;
 			}
+		
+			selectionProvider.setSelection(selection);
 
 		} catch (Exception e) {
 
