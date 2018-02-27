@@ -1,17 +1,13 @@
 package csv.fixer.plugin.main;
 
-import java.io.IOException;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.console.*;
 import org.eclipse.ui.texteditor.*;
 
 public class CSVFixer {
@@ -77,103 +73,6 @@ public class CSVFixer {
 
 			e.printStackTrace();
 		}
-	}
-
-	public static void showTelegramNumber(IEditorPart part) throws IOException {
-		
-		connections.clear();
-
-		MessageConsole console = (MessageConsole) findConsole("Java Stack Trace Console");
-//		IOConsoleOutputStream out = console.newOutputStream();
-//		IDocument consoleDocument = console.getDocument();
-//		String consoleText = consoleDocument.get();
-		
-//		String signsForTGNumber = ".csv, #";
-		
-//		if(!consoleText.contains(signsForTGNumber)) {
-//			
-//			out.write("			org.junit.ComparisonFailure: [UC18503-3.csv, #7] Andere Nachricht erwartet expected:<0[0]9952LK32000000000000...> but was:<0[1]9952LK32000000000000...>			at org.junit.Assert.assertEquals(Assert.java:115)			at de.landefeld.mfr.simulator.TelegramLogPlayer.playFile(TelegramLogPlayer.java:157)			at de.landefeld.mfr.simulator.TelegramLogPlayer.playFileWithEnvironmentSetup(TelegramLogPlayer.java:97)			at de.landefeld.mfr.SingleTelegramLogfileTest.test_einzelnes_Logfile_abspielen(SingleTelegramLogfileTest.java:41)");
-//		}
-		
-		IPatternMatchListener iPatternMatchListener = new IPatternMatchListener() {
-			
-			@Override
-			public void matchFound(PatternMatchEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void disconnect() {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void connect(TextConsole arg0) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public String getPattern() {
-				
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public String getLineQualifier() {
-				
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public int getCompilerFlags() {
-				
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		};
-		
-		iPatternMatchListener.connect(console);
-		iPatternMatchListener.
-		
-		console.addPatternMatchListener(iPatternMatchListener);
-		
-		console.newOutputStream().write("TEST");
-		
-//		String number = "7";//substringAfter(consoleText, signsForTGNumber).substring(0, 1);
-		
-		return;
-
-//		try {
-//			
-//			List<String> allLines = getAllLines(part);
-//			
-//			int lineNumber = 1;
-//			int telegramNumber = 1;
-//			
-//			for(String line : allLines) {
-//				
-//				// Wenn es sich um ein Telegramm handelt
-//				if (!line.startsWith("@") && !line.startsWith("#") && line.trim().length() > 1) {
-//					
-//					// Und die Telegrammnummer stimmt
-//					if((telegramNumber+"").equals(number)) {
-//						
-//						System.out.println("Telegramm #"+telegramNumber+" ist in Zeile "+lineNumber+".");
-//						break;
-//					}
-//					
-//					telegramNumber++;
-//				}
-//				
-//				lineNumber++;
-//			}
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//		}
 	}
 
 	public static void toggleComment(IEditorPart part) {
@@ -333,20 +232,5 @@ public class CSVFixer {
 		System.out.println("");
 		
 		return allLines;
-	}
-
-	private static IOConsole findConsole(String name) {
-		
-	      ConsolePlugin plugin = ConsolePlugin.getDefault();
-	      IConsoleManager conMan = plugin.getConsoleManager();
-	      IConsole[] existing = conMan.getConsoles();
-	      for (int i = 0; i < existing.length; i++)
-	         if (name.equals(existing[i].getName()))
-	            return (IOConsole) existing[i];
-	      
-	      //no console found, so create a new one
-	      IOConsole myConsole = new MessageConsole(name, null);
-	      conMan.addConsoles(new IConsole[]{myConsole});
-	      return myConsole;
 	}
 }

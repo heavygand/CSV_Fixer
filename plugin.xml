@@ -11,11 +11,6 @@
       </command>
       <command
             categoryId="CSV.Fixer.plugin.commands.category"
-            id="CSV.Fixer.plugin.commands.showTGNumberCommand"
-            name="show telegram from number">
-      </command>
-      <command
-            categoryId="CSV.Fixer.plugin.commands.category"
             id="CSV.Fixer.plugin.commands.toggleCommentCommand"
             name="toggle comment in selected line">
       </command>
@@ -25,10 +20,6 @@
       <handler
             commandId="CSV.Fixer.plugin.commands.FixTGCounterCommand"
             class="csv.fixer.plugin.handlers.CSVFixerHandler">
-      </handler>
-      <handler
-            class="csv.fixer.plugin.handlers.CSVShowTelegramHandler"
-            commandId="CSV.Fixer.plugin.commands.showTGNumberCommand">
       </handler>
       <handler
             class="csv.fixer.plugin.handlers.CSVToggleCommentHandler"
@@ -49,12 +40,6 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+5">
       </key>
-      <key
-            commandId="CSV.Fixer.plugin.commands.showTGNumberCommand"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+4">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -68,11 +53,6 @@
                   commandId="CSV.Fixer.plugin.commands.FixTGCounterCommand"
                   mnemonic="S"
                   id="CSV.Fixer.plugin.menus.FixTGCounterCommand">
-            </command>
-            <command
-                  commandId="CSV.Fixer.plugin.commands.showTGNumberCommand"
-                  id="CSV.Fixer.plugin.menus.showTGNumberCommand"
-                  mnemonic="S">
             </command>
             <command
                   commandId="CSV.Fixer.plugin.commands.toggleCommentCommand"
