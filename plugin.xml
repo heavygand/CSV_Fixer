@@ -7,12 +7,12 @@
       <command
             categoryId="CSV.Fixer.plugin.commands.category"
             id="CSV.Fixer.plugin.commands.FixTGCounterCommand"
-            name="fix telegramcounter">
+            name="Fix telegramcounter in selected editor">
       </command>
       <command
             categoryId="CSV.Fixer.plugin.commands.category"
             id="CSV.Fixer.plugin.commands.toggleCommentCommand"
-            name="toggle comment in selected line">
+            name="Toggle comment in selected line">
       </command>
    </extension>
    <extension
@@ -46,7 +46,7 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="CSV Fixer Plugin"
+               label="CSV"
                mnemonic="M"
                id="CSV.Fixer.plugin.menus.csvFixer">
             <command
@@ -61,6 +61,15 @@
             </command>
          </menu>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+           <editor
+	            class="csv.fixer.plugin.editor.CSVEditor"
+	            icon="icons/myC.png"
+	            id="org.eclipse.ui.examples.contributions.editor"
+	            name="CSVFixerEditor">
+	      </editor>
    </extension>
 
 </plugin>

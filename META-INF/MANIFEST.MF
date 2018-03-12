@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text;bundle-version="3.12.1",
  org.eclipse.ui.console;bundle-version="3.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-Vendor: Christian Wiegand
+Bundle-Vendor: MyControl GmbH
