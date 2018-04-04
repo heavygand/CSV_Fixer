@@ -14,6 +14,11 @@
             id="CSV.Fixer.plugin.commands.toggleCommentCommand"
             name="Toggle comment in selected line">
       </command>
+      <command
+            defaultHandler="csv.fixer.plugin.handlers.KontextBefehlHandler"
+            id="CSV.Fixer.plugin.commands.kontextBefehl"
+            name="Timestamp(s) entfernen">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -61,15 +66,16 @@
             </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="CSV.Renamer.plugin.menuContribution3">
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:#TextEditorContext?after=additions">
+         <command
+               commandId="CSV.Fixer.plugin.commands.kontextBefehl"
+               icon="icons/myC.png">
+         </command>
+      </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.editors">
-           <editor
-	            class="csv.fixer.plugin.editor.CSVEditor"
-	            icon="icons/myC.png"
-	            id="org.eclipse.ui.examples.contributions.editor"
-	            name="CSVFixerEditor">
-	      </editor>
-   </extension>
-
 </plugin>

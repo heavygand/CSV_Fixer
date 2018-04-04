@@ -79,6 +79,57 @@ public class CSVFixer {
 			e.printStackTrace();
 		}
 	}
+	public static void removeTimestamp(IEditorPart part) {
+		
+		ISelectionProvider selectionProvider = ((ITextEditor)part).getSelectionProvider();
+	    ISelection selection = selectionProvider.getSelection();
+	    
+	    ITextSelection textSelection = null;
+	    
+	    if (selection instanceof ITextSelection) {
+	    	
+	    	textSelection = (ITextSelection)selection;
+	    }
+		
+		int startLine = textSelection.getStartLine();
+		int endLine = textSelection.getEndLine();
+		
+		System.out.println("Zeile "+(startLine+1)+" ist markiert");
+		
+		connections.clear();
+
+		try {
+			
+			List<String> allLines = getAllLines(part);
+			
+			int lineNumber = 0;
+			
+			// Gehe durch alle zeilen
+			for(String line : allLines) {
+				
+				System.out.println("Zeile "+lineNumber+": "+line);
+				
+				// Wenn die Zeile im ausgewählten Bereich ist
+				if (startLine <= lineNumber && lineNumber <= endLine && line.contains(";")) {
+					
+					String newLine = substringAfter(line, ";");
+					
+					// Zeile ohne timestamp reinschreiben
+					modifyLine(allLines, lineNumber, line, ";"+newLine);
+					
+					putIntoEditor(doc, allLines);
+				}
+				
+				lineNumber++;
+			}
+		
+			selectionProvider.setSelection(selection);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	public static void toggleComment(IEditorPart part) {
 		
@@ -186,6 +237,7 @@ public class CSVFixer {
 		}
 	}
 
+	// Das hier ist before FIRST
 	private static String substringBefore(String line, String beforeWhat) {
 
 		return line.substring(0, line.indexOf(beforeWhat));
@@ -219,9 +271,9 @@ public class CSVFixer {
 	}
 
 	/**
-	 * Modifiert eine Line in der Liste der Lines
+	 * Modifiziert eine Line in der Liste der Lines
 	 * 
-	 * @param allLines
+	 * @param allLines Alle Zeilen
 	 * @param lineNumber
 	 * @param oldLine
 	 * @param newLine
