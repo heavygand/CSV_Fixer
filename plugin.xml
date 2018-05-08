@@ -43,7 +43,7 @@
             commandId="CSV.Fixer.plugin.commands.toggleCommentCommand"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+5">
+            sequence="M1+7">
       </key>
    </extension>
    <extension

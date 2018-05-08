@@ -1,5 +1,6 @@
 package csv.fixer.plugin.main;
 
+import java.io.IOException;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,6 +9,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.console.IOConsoleOutputStream;
 import org.eclipse.ui.texteditor.*;
 
 public class CSVFixer {
@@ -79,6 +81,42 @@ public class CSVFixer {
 			e.printStackTrace();
 		}
 	}
+	
+    public static void showTelegramNumber(IEditorPart part) throws IOException {
+        
+        connections.clear();
+        
+        try {
+            
+            List<String> allLines = getAllLines(part);
+            
+            int lineNumber = 1;
+            int telegramNumber = 1;
+            
+            for(String line : allLines) {
+                
+                // Wenn es sich um ein Telegramm handelt
+                if (!line.startsWith("@") && !line.startsWith("#") && line.trim().length() > 1) {
+                    
+                    // Und die Telegrammnummer stimmt
+//                    if((telegramNumber+"").equals(number)) {
+//                        
+//                        System.out.println("Telegramm #"+telegramNumber+" ist in Zeile "+lineNumber+".");
+//                        break;
+//                    }
+                    
+                    telegramNumber++;
+                }
+                
+                lineNumber++;
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+    }
+	
 	public static void removeTimestamp(IEditorPart part) {
 		
 		ISelectionProvider selectionProvider = ((ITextEditor)part).getSelectionProvider();
@@ -143,6 +181,9 @@ public class CSVFixer {
 	    	textSelection = (ITextSelection)selection;
 	    }
 		
+		int startLine = textSelection.getStartLine();
+		int endLine = textSelection.getEndLine();
+		
 		int selectedLine = textSelection.getStartLine();
 		
 		System.out.println("Zeile "+(selectedLine+1)+" ist markiert");
@@ -155,28 +196,37 @@ public class CSVFixer {
 			
 			int lineNumber = 0;
 			
-			// Gehe durch alle zeilen
+			// Immer alles kommentieren, auﬂer wenn alles ein Kommentar ist
+			// D.h. Wenn irgendwo !kein! Kommentar vorkommt, dann muss alles kommentiert werden, sonst alles entkommentieren
+			boolean commentAll = false;
 			for(String line : allLines) {
 				
-				System.out.println("Zeile "+lineNumber+": "+line);
-				
-				// Wenn es die richtige Zeile ist
-				if ((lineNumber+"").equals(selectedLine+"")) {
+				if (startLine <= lineNumber && lineNumber <= endLine && !line.startsWith("#")) {
 					
-					// Wenn schon kommentiert, dann uncomment
-					if(line.startsWith("#")) {
+					commentAll = true;
+				}
+				
+				lineNumber++;
+			}
+			
+			lineNumber = 0;
+			
+			// Gehe durch alle Zeilen und mache was zuvor festgelegt wurde
+			for(String line : allLines) {
+				
+				if (startLine <= lineNumber && lineNumber <= endLine) {
+					
+					System.out.println("Zeile "+(lineNumber+1)+" wird "+(commentAll?"kommentiert":"unkommentiert")+": "+line);
+					
+					if(commentAll) {
 
-						modifyLine(allLines, lineNumber, line, line.substring(2));
-						
-						putIntoEditor(doc, allLines);
+						modifyLine(allLines, lineNumber, line, "#"+line);
 					}
-					// Wenn nicht kommentiert, dann kommentieren
 					else {
 						
-						modifyLine(allLines, lineNumber, line, "# "+line);
-						
-						putIntoEditor(doc, allLines);
+						modifyLine(allLines, lineNumber, line, line.substring(1));
 					}
+					putIntoEditor(doc, allLines);
 				}
 				
 				lineNumber++;
