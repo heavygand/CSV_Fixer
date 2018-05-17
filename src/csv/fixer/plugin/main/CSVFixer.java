@@ -43,17 +43,18 @@ public class CSVFixer {
 					String telegramPart = ";"+substringAfter(line, ";");
 					System.out.println("telegramPart: " + telegramPart);
 					
-					// Hole den Counter für diese Verbindung
-					int theRightConnectionCounter = getOrCreateCounter(telegramPart);
+					// Hole den Counter für diese Verbindung, so wie er sein SOLLTE
+					int sollCounter = getOrCreateCounter(telegramPart);
 					
-					// Hole den Zähler raus aus dem aktuellen Telegramm
-					int currentConnectionCounter = Integer.parseInt(telegramPart.substring(1, 3));
+					// Hole den Zähler raus aus dem aktuellen Telegramm, so wie er IST
+					int istCounter = Integer.parseInt(telegramPart.substring(1, 3));
 					
 					// Setze den Zähler (telegramCounter), wenn er nicht richtig ist
-					if(currentConnectionCounter != theRightConnectionCounter) {
+					if(istCounter != sollCounter) {
 						
 						changed = true;
-						String correctedLine = timestampPart + ";" + StringUtils.leftPad((theRightConnectionCounter+""), 2, "0") + telegramPart.substring(3);
+						
+						String correctedLine = timestampPart + ";" + StringUtils.leftPad(((sollCounter%100)+""), 2, "0") + telegramPart.substring(3);
 						
 						modifyLine(allLines, lineNumber, line, correctedLine);
 					}
